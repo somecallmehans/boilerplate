@@ -6,12 +6,6 @@ require("dotenv").config();
 const axios = require('axios');
 
 const User = db.define('users', {
-  firstName: {
-    type: Sequelize.STRING,
-  },
-  lastName: {
-    type: Sequelize.STRING,
-  },
   username: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -36,8 +30,9 @@ User.prototype.generateToken = function(){
 
 User.authenticate = async function({username, password}){
   const user = await this.findOne({where: { username }})
+  console.log("USER: ", user);
+  console.log("PASS BOOL: ", await user.correctPassword(password));
   if(!user || !(await user.correctPassword(password))){
-    console.log("PASS VS HASH PASS: ", password, user.dataValues.password);
     const error = Error('Incorrect username/password');
     error.status = 401;
     throw error;
