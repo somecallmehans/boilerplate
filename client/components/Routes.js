@@ -4,10 +4,18 @@ import { Signup, Login } from './UserAuth';
 
 const Routes = () => {
   return (
-    <div>
-    <Signup />
-    <Login />
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <Link to="/signup">Sign Up</Link>
+          <Link to="login">Login</Link>
+        </nav>
+        <main>
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/login" component={Login} />
+        </main>
+      </div>
+    </Router>
   )
 }
 
